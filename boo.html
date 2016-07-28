@@ -1,0 +1,44 @@
+<script src="http://cdn.pubnub.com/pubnub-3.x.x.min.js"></script>
+<script>
+var pubnub = PUBNUB({
+    subscribe_key: 'sub-c-628c6db4-5214-11e6-bfbb-02ee2ddab7fe', // always required
+    publish_key: 'pub-c-26070c31-44b4-4a17-ba79-b2bf4a05624c' // only required if publishing
+});
+
+var x = 0;
+var y = 0;
+document.onkeydown = function(event) {
+     if (!event)
+          event = window.event;
+     var code = event.keyCode;
+     if (event.charCode && code == 0)
+          code = event.charCode;
+     switch(code) {
+          case 37:
+              pubnub.publish({
+      channel: 'test-pi',
+      message: {
+          action: 'move', 
+          x: ++x,
+          y: y
+      },
+      callback: function(m){
+          console.log(m);
+      }
+});
+              break;
+          case 38:
+              // Key up.
+              break;
+          case 39:
+              // Key right.
+              break;
+          case 40:
+              // Key down.
+              break;
+     }
+     event.preventDefault();
+};
+
+
+</script>
